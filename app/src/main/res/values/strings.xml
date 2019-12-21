@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Super storm</string>
+    <string name="all">All</string>
+    <string name="favorite">Favorite</string>
 </resources>
