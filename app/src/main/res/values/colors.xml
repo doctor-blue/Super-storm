@@ -4,4 +4,6 @@
     <color name="colorPrimaryDark">#4A6572</color>
     <color name="colorAccent">#F9AA33</color>
     <color name="textColor">#232F34</color>
+    <color name="whileColor">#fff</color>
+    <color name="backgroundPlayer">#E0E0E0</color>
 </resources>
