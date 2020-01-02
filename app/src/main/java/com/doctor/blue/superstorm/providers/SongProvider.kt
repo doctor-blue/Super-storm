@@ -36,20 +36,20 @@ class SongProvider() : AsyncTask<Void, Void, List<Song>>() {
             MediaStore.Audio.AudioColumns.ALBUM,
             MediaStore.Audio.ArtistColumns.ARTIST
         )
-        val c = context.contentResolver.query(
+        val cursor = context.contentResolver.query(
             uri,
             projection,
             null,
             null,
             null
         ) //MediaStore.Audio.Media.DATA + " like ? ", //new String[]{"%utm%"}, null);
-        if (c != null) {
-            while (c.moveToNext()) { // Create a model object.
+        if (cursor != null) {
+            while (cursor.moveToNext()) { // Create a model object.
                 val song = Song()
-                val path = c.getString(0) // Retrieve path.
-                val name = c.getString(1) // Retrieve name.
+                val path = cursor.getString(0) // Retrieve path.
+                val name = cursor.getString(1) // Retrieve name.
                 // val album = c.getString(2) // Retrieve album name.
-                val artist = c.getString(3) // Retrieve artist name.
+                val artist = cursor.getString(3) // Retrieve artist name.
                 // Set data to the model object.
                 song.songName = name
                 song.songArtist = artist
@@ -59,7 +59,7 @@ class SongProvider() : AsyncTask<Void, Void, List<Song>>() {
                 // Add the model object to the list .
                 songs.add(song)
             }
-            c.close()
+            cursor.close()
         }
     }
 }

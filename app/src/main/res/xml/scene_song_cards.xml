@@ -15,8 +15,7 @@
         app:constraintSetEnd="@+id/fanOut"
         app:constraintSetStart="@+id/start"
         app:duration="1000"
-        app:motionInterpolator="bounce">
-    </Transition>
+        app:motionInterpolator="bounce" />
 
     <Transition
         android:id="@+id/fanOutToCollapseCards"

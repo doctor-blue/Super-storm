@@ -30,8 +30,10 @@ class SongPlayer private constructor() {
     private var isStart = false
 
     private fun setUrl() {
-        val uri = Uri.parse(songs[currentSongPosition].songPath)
-        player = MediaPlayer.create(context, uri)
+        if (songs.isNotEmpty()) {
+            val uri = Uri.parse(songs[currentSongPosition].songPath)
+            player = MediaPlayer.create(context, uri)
+        }
     }
 
     fun start() {
@@ -43,13 +45,14 @@ class SongPlayer private constructor() {
     }
 
     fun pause() {
-        player.pause()
+        if (songs.isNotEmpty())
+            player.pause()
     }
 
     fun play() {
         if (isStart) {
-            if (songs.isNotEmpty()){
-                val pos=player.currentPosition
+            if (songs.isNotEmpty()) {
+                val pos = player.currentPosition
                 start()
                 player.seekTo(pos)
             }
@@ -60,24 +63,28 @@ class SongPlayer private constructor() {
 
 
     fun nextSong() {
-       if (!isRepeatOne){
-           currentSongPosition++
-           if (currentSongPosition >= songs.size)
-               currentSongPosition = 0
-           stop()
-       }
-
+        currentSongPosition++
+        if (currentSongPosition >= songs.size)
+            currentSongPosition = 0
+        stop()
         start()
+    }
+    fun repeat(){
+        if (isRepeatOne){
+            stop()
+            start()
+        }else
+            nextSong()
     }
 
 
     fun preSong() {
         if (currentSongPosition > 0) {
             currentSongPosition--
-            stop()
-            start()
-
-        }
+        } else
+            currentSongPosition = songs.size - 1
+        stop()
+        start()
     }
 
     fun stop() {
@@ -88,27 +95,34 @@ class SongPlayer private constructor() {
     }
 
     fun getCurrentSongName(): String {
-        return songs[currentSongPosition].songName
+        return if (songs.isEmpty()) "Hello world" else songs[currentSongPosition].songName
     }
 
     fun getCurrentSongArtist(): String {
-        return songs[currentSongPosition].songArtist
+        return if (songs.isEmpty()) "Unknown" else songs[currentSongPosition].songArtist
     }
 
     fun getDuration(): Int {
-        return player.duration
+        return if (songs.isEmpty()) 0 else player.duration
     }
 
     fun getCurrentTime(): Int {
-        return player.currentPosition
+        return if (songs.isEmpty()) 0 else player.currentPosition
     }
 
     fun seekTo(pos: Int) {
-        player.seekTo(pos)
+        if (songs.isNotEmpty())
+            player.seekTo(pos)
     }
 
     fun isPlaying(): Boolean {
-        return player.isPlaying
+        return if (songs.isEmpty()) false else player.isPlaying
+    }
+
+    fun getLocationToPlacePhotos(num: Int): Int {
+        var position = currentSongPosition + num
+        if (position >= songs.size || position < 0) position = songs.size - 2
+        return position
     }
 
 }

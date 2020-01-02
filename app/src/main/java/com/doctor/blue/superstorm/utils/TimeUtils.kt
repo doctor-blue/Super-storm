@@ -1,6 +1,5 @@
 package com.doctor.blue.superstorm.utils
 
-import androidx.core.util.TimeUtils
 import java.math.RoundingMode
 import java.text.DecimalFormat
 
@@ -28,7 +27,8 @@ object TimeUtils {
 
         return "$finalTimerString$minutes:$secondsString"
     }
-    fun formatSongProgress(time:Double):Int{
+
+    fun formatSongProgress(time: Double): Int {
         val df = DecimalFormat("#")
         df.roundingMode = RoundingMode.CEILING
         return df.format(time).toInt()
